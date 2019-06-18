@@ -1,6 +1,7 @@
 #!groovy
 // Variable defines
 def GUID      	= "79a3"
+def devProject  = "${GUID}-tasks-dev"
 
 podTemplate(
   label: "skopeo-pod",
