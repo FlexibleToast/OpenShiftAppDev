@@ -1,8 +1,6 @@
 #!groovy
 // Variable defines
 // def GUID      	= "79a3"
-def devProject  = "${GUID}-tasks-dev"
-def prodProject = "${GUID}-tasks-prod"
 
 podTemplate(
   label: "skopeo-pod",
@@ -39,8 +37,10 @@ podTemplate(
 
       // TBD Set the tag for the development image: version + build number
       def devTag  = "${version}-${BUILD_NUMBER}"
+			def devProject  = "${GUID}-tasks-dev"
       // Set the tag for the production image: version
       def prodTag = "${version}"
+			def prodProject = "${GUID}-tasks-prod"
 
       // Using Maven build the war file
       // Do not run tests in this step
@@ -62,8 +62,7 @@ podTemplate(
 					// Display the results of the tests in the Jenkins Task Overview
 	        step([$class: 'JUnitResultArchiver', testResults: '**/target/surefire-reports/TEST-*.xml'])
 	      }
-			}
-			secondBranch: {
+			}, secondBranch: {
 	      // Using Maven to call SonarQube for Code Analysis
 	      stage('Code Analysis') {
 	        echo "Running Code Analysis"
